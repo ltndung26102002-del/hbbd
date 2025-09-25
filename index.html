@@ -37,7 +37,7 @@ body {
 /* Card */
 .card {
   width:100%;
-  max-width:500px;
+  max-width:460px;
   background:rgba(255,255,255,0.12);
   backdrop-filter: blur(6px);
   border-radius:22px;
@@ -81,15 +81,11 @@ p.sub{margin:0;text-align:center;opacity:0.9}
 
 /* Layout ảnh + bánh */
 .photo-cake {
-  display: flex;
-  justify-content: center; 
-  align-items: center;
-  margin-top: 10px;
-  width: 100%;            
-  position: relative;         
-}
-.photo-cake.active {
-  justify-content: space-between;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+  margin-top:10px;
 }
 
 /* Ảnh */
@@ -100,27 +96,25 @@ img#photo {
   object-fit:cover;
   display:block;
   box-shadow:0 6px 18px rgba(0,0,0,0.2);
-  transition: transform 1s ease;
+  transition:transform 1s ease;
+  margin-left: 96px;
 }
 img#photo.move-left {
-  transform: translateX(-40px);
+  transform:translateX(-50px);
 }
+
 /* Bánh */
 .cake-container {
-  display: none; 
   width:180px;
   height:220px;
-  opacity:0;                 
-  transform: translateY(40px);
-  transition: all 1s ease;
-  position: relative;
-  margin-left: 20px;
-  padding-top: 200px;  
+  opacity:0;
+  transform:translateY(40px);
+  transition:all 1s ease;
+  position:relative;
 }
 .cake-container.show {
-  display: block;   
   opacity:1;
-  transform: translateY(0);
+  transform:translateY(0);
 }
 
 .plate {
@@ -181,6 +175,7 @@ img#photo.move-left {
   transform: rotate(180deg);
 }
 
+/* Nến số + ngọn lửa */
 .candle-number {
   position: absolute;
   bottom: 85px;
@@ -240,25 +235,6 @@ img#photo.move-left {
 .sprinkle:nth-child(4n + 2) { background-color: var(--color-sprinkle-2);}
 .sprinkle:nth-child(4n + 3) { background-color: var(--color-sprinkle-3);}
 .sprinkle:nth-child(4n + 4) { background-color: var(--color-sprinkle-4);}
-
-.cake-message {
-  position: absolute;
-  top: -50px;
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  font-size: 16px;
-  font-weight: bold;
-  color: #ff4081;
-  text-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-  opacity: 0;
-  transition: all 1s ease;
-  text-align: justify;
-  width: inherit;
-}
-.cake-container.show .cake-message {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
 </style>
 </head>
 <body>
@@ -273,8 +249,7 @@ img#photo.move-left {
 
       <div class="photo-cake">
         <img id="photo" alt="friend" src="https://github.com/ngocdungnee/my-photos/raw/main/image.jpg">
-        <div class="cake-container" id="cake">
-          <div class="cake-message">Chúc mừng sinh nhật con bạn thân 🥳🎂<br>Thêm một tuổi mới rồi, mong mày lúc nào cũng vui vẻ, xinh đẹp, bớt drama, thêm nhiều tiền và nhiều niềm vui.<br>Có tao và Trân bên cạnh thì khỏi lo buồn chán nha 😎🔥<br>Tuổi mới cố gắng hơn, yêu thương bản thân nhiều hơn, và nhớ là lúc nào cũng có tao ủng hộ<br>Happy Birthday, bestie! 💖✨</div>
+        <div class="cake-container" id="cake" style="margin-left: -20px;margin-top: 200px;">
           <div class="plate"></div>
           <div class="cake layer1"></div>
           <div class="cake layer2"></div>
@@ -283,6 +258,7 @@ img#photo.move-left {
           <div class="cake layer5"></div>
           <div class="cream"></div>
           <div class="sprinkles"></div>
+          <!-- Nến số với ngọn lửa -->
           <div class="candle-number" id="candleNum">
             22
             <div class="flame"></div>
@@ -325,17 +301,15 @@ const audio = document.getElementById('song');
 document.getElementById('btnPlay').addEventListener('click', () => {
   audio.muted = false;
   audio.play().catch(()=>{});
-
-  document.querySelector('.photo-cake').classList.add('active');
   document.getElementById('photo').classList.add('move-left');
   document.getElementById('cake').classList.add('show');
 
-  setTimeout(() => {
+setTimeout(() => {
     const candle = document.getElementById("candleNum");
     candle.classList.add("change");    
     setTimeout(() => {
       candle.childNodes[0].nodeValue = "23"; 
-    }, 400); 
+    }, 400); // đổi khi opacity = 0
     candle.addEventListener("animationend", () => {
       candle.classList.remove("change");
     }, { once: true });
