@@ -25,18 +25,14 @@ html,body {
   font-family:Inter, system-ui, Arial;
 }
 body {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,var(--bg1),var(--bg2));
-  padding:18px;
-  position:relative;
-  overflow:hidden;
-
-  /* Fit chuẩn iPhone 13 Pro Max */
-  max-width: 390px;   /* chiều ngang chuẩn */
-  margin: 0 auto;     /* căn giữa khi mở trên màn to hơn */
-  min-height: 844px;  /* chiều cao chuẩn */
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--bg1), var(--bg2));
+  padding: 18px;
+  max-width: 390px;
+  margin: 0 auto;
+  min-height: 100vh;
+  overflow-y: auto;
 }
 
 /* Card */
