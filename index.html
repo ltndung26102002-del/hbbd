@@ -25,34 +25,34 @@ html,body {
   font-family:Inter, system-ui, Arial;
 }
 body {
-  background: linear-gradient(135deg, var(--bg1), var(--bg2));
-  padding: 18px;
-  max-width: 390px;
-  margin: 0 auto;
-  min-height: 100vh;     
-  overflow-y: auto;  
-  display: flex;
-  justify-content: center;
-  overflow-x: hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+  padding:18px;
+  position:relative;
+  overflow:hidden;
+
+  /* Fit chuẩn iPhone 13 Pro Max */
+  max-width: 390px;   /* chiều ngang chuẩn */
+  margin: 0 auto;     /* căn giữa khi mở trên màn to hơn */
+  min-height: 844px;  /* chiều cao chuẩn */
 }
 
 /* Card */
 .card {
-  width: 100%;
-  max-width: 360px;
-  height: 630px;       
-  overflow-y: auto;
-  overflow-x: hidden;     
-  background: rgba(255,255,255,0.12);
+  width:100%;
+  max-width:360px;
+  background:rgba(255,255,255,0.12);
   backdrop-filter: blur(6px);
-  border-radius: 22px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-  padding: 20px;
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  border-radius:22px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.18);
+  padding:20px;
+  position:relative;
+  z-index:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 h1{font-size:28px;margin:6px 0 2px;text-align:center}
 p.sub{margin:0;text-align:center;opacity:0.9}
@@ -227,8 +227,8 @@ img#photo.move-left {
 /* sprinkles */
 .sprinkles {
   position: absolute;
-  bottom: 70px;
-  left: 22px;
+  bottom: 67px;
+  left: 35px;
   width: 100px;
   height: 12px;
   z-index: 3;
