@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Happy Birthday!</title>
+<style>
+:root {
+  --bg1:#FFDEE9;
+  --bg2:#B5FFFC;
+  --color-plate: #ffffff;
+  --color-cake-dark: #3b2516;
+  --color-cake-light: #6e5039;
+  --color-frosting: #ffffff;
+  --color-sprinkle-1: #ff5722;
+  --color-sprinkle-2: #2196f3;
+  --color-sprinkle-3: #ffeb3b;
+  --color-sprinkle-4: #9c27b0;
+  --color-shadow: rgba(0, 0, 0, 0.15);
+}
+
+html,body {
+  height:100%;
+  margin:0;
+  font-family:Inter, system-ui, Arial;
+}
+body {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+  padding:18px;
+  position:relative;
+  overflow:hidden;
+}
+
+/* Card */
+.card {
+  width:100%;
+  max-width:500px;
+  background:rgba(255,255,255,0.12);
+  backdrop-filter: blur(6px);
+  border-radius:22px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.18);
+  padding:20px;
+  position:relative;
+  z-index:1;
+  height:auto; 
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+h1{font-size:28px;margin:6px 0 2px;text-align:center}
+p.sub{margin:0;text-align:center;opacity:0.9}
+.name{display:block;text-align:center;font-weight:700;font-size:22px;margin-top:8px}
+.center{max-width:360px;margin:0 auto}
+
+/* Balloons */
+.balloon {
+  position:absolute;width:140px;height:180px;border-radius:60% 60% 50% 50%;
+  right:-30px;top:-40px;transform:rotate(-18deg);opacity:0.28;
+}
+.balloon.two {
+  left:-40px;right:auto;top:10px;transform:rotate(12deg);opacity:0.2;
+}
+
+/* Confetti */
+.confetti-canvas {
+  position:fixed;
+  inset:0;
+  pointer-events:none; 
+  z-index:0;
+}
+
+/* Button */
+#btnPlay {
+  padding:12px 20px;font-size:16px;border:none;border-radius:8px;
+  background:#ff9a9e;color:#fff;cursor:pointer;
+  box-shadow:0 4px 8px rgba(0,0,0,0.2);margin-top:10px;
+}
+
+/* Layout ảnh + bánh */
+.photo-cake {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  margin-top: 10px;
+  width: 100%;            
+  position: relative;         
+}
+.photo-cake.active {
+  justify-content: space-between;
+}
+
+/* Ảnh */
+img#photo {
+  width:185px;
+  max-height:510px;
+  border-radius:15px;
+  object-fit:cover;
+  display:block;
+  box-shadow:0 6px 18px rgba(0,0,0,0.2);
+  transition: transform 1s ease;
+}
+img#photo.move-left {
+  transform: translateX(-40px);
+}
+/* Bánh */
+.cake-container {
+  display: none; 
+  width:180px;
+  height:220px;
+  opacity:0;                 
+  transform: translateY(40px);
+  transition: all 1s ease;
+  position: relative;
+  margin-left: 20px;
+  padding-top: 200px;  
+}
+.cake-container.show {
+  display: block;   
+  opacity:1;
+  transform: translateY(0);
+}
+
+.plate {
+  background: var(--color-plate);
+  border-radius: 20%;
+  width: 140px;
+  height: 6px;
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  box-shadow: 0 5px 15px var(--color-shadow);
+}
+.cake {
+  width: 120px;
+  position: absolute;
+  left: 30px;
+  border-radius: 5px;
+}
+.layer1 {
+  background: var(--color-cake-light);
+  height: 16px;
+  bottom: 16px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.layer2 {
+  background: var(--color-cake-dark);
+  height: 5px;
+  bottom: 32px;
+}
+.layer3 {
+  background: var(--color-cake-light);
+  height: 16px;
+  bottom: 37px;
+}
+.layer4 {
+  background: var(--color-cake-dark);
+  height: 5px;
+  bottom: 53px;
+}
+.layer5 {
+  background: var(--color-cake-light);
+  height: 16px;
+  bottom: 58px;
+}
+.cream {
+  background: var(--color-frosting);
+  height: 16px;
+  width: 120px;
+  bottom: 74px;
+  border-radius: 20px;
+  position: absolute;
+  left: 30px;
+  z-index: 2;
+  clip-path: polygon(0% 0%,5% 10%,10% 5%,15% 20%,20% 10%,25% 25%,30% 5%,35% 30%,
+    40% 10%,45% 20%,50% 8%,55% 25%,60% 5%,65% 30%,70% 10%,75% 20%,
+    80% 8%,85% 15%,90% 5%,95% 12%,100% 0%,100% 100%,0% 100%);
+  transform: rotate(180deg);
+}
+
+.candle-number {
+  position: absolute;
+  bottom: 85px;
+  left: 72px;
+  font-size: 30px; 
+  font-weight: 900;
+  color: #fff;
+  text-shadow:
+    0 0 6px #ff4081,
+    0 0 12px #ff4081,
+    0 0 20px #ff4081;
+  z-index: 3;
+}
+.candle-number .flame {
+  position: absolute;
+    top: -20px;
+    left: 52%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 25px;
+  background: radial-gradient(ellipse at center, #ffeb3b 0%, #ff9800 60%, transparent 80%);
+  border-radius: 50%;
+  animation: flicker 0.25s infinite;
+}
+@keyframes flicker {
+  0%   { transform: translateX(-50%) scale(1); opacity: 1; }
+  50%  { transform: translateX(-48%) scale(1.1); opacity: 0.85; }
+  100% { transform: translateX(-52%) scale(0.95); opacity: 1; }
+}
+@keyframes changeNumber {
+  0%   { opacity: 1; transform: scale(1); }
+  40%  { opacity: 0; transform: scale(0.5); }
+  60%  { opacity: 0; transform: scale(0.5); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.candle-number.change {
+  animation: changeNumber 1s ease forwards;
+}
+
+/* sprinkles */
+.sprinkles {
+  position: absolute;
+  bottom: 77px;
+  left: 35px;
+  width: 120px;
+  height: 12px;
+  z-index: 3;
+}
+.sprinkle {
+  position: absolute;
+  height: 4px;
+  width: 12px;
+  border-radius: 5px;
+  transform: rotate(var(--rotation));
+}
+.sprinkle:nth-child(4n + 1) { background-color: var(--color-sprinkle-1);}
+.sprinkle:nth-child(4n + 2) { background-color: var(--color-sprinkle-2);}
+.sprinkle:nth-child(4n + 3) { background-color: var(--color-sprinkle-3);}
+.sprinkle:nth-child(4n + 4) { background-color: var(--color-sprinkle-4);}
+
+.cake-message {
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  font-size: 16px;
+  font-weight: bold;
+  color: #ff4081;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: all 1s ease;
+  text-align: justify;
+  width: inherit;
+}
+.cake-container.show .cake-message {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+</style>
+</head>
+<body>
+  <canvas class="confetti-canvas" id="confetti"></canvas>
+
+  <div class="card" id="card">
+    <div class="balloon float" style="background:linear-gradient(180deg,#ff9a9e,#fecfef);"></div>
+    <div class="balloon two float" style="background:linear-gradient(180deg,#a1c4fd,#c2e9fb);"></div>
+    <div class="center">
+      <h1>HAPPY BIRTHDAY</h1>
+      <h2 class="sub" style="text-align: center;margin-top: 5px;">NaNa❤️</h2>
+
+      <div class="photo-cake">
+        <img id="photo" alt="friend" src="https://github.com/ngocdungnee/my-photos/raw/main/image.jpg">
+        <div class="cake-container" id="cake">
+          <div class="cake-message">Chúc mừng sinh nhật con bạn thân 🥳🎂<br>Thêm một tuổi mới rồi, mong mày lúc nào cũng vui vẻ, xinh đẹp, bớt drama, thêm nhiều tiền và nhiều niềm vui.<br>Có tao và Trân bên cạnh thì khỏi lo buồn chán nha 😎🔥<br>Tuổi mới cố gắng hơn, yêu thương bản thân nhiều hơn, và nhớ là lúc nào cũng có tao ủng hộ<br>Happy Birthday, bestie! 💖✨</div>
+          <div class="plate"></div>
+          <div class="cake layer1"></div>
+          <div class="cake layer2"></div>
+          <div class="cake layer3"></div>
+          <div class="cake layer4"></div>
+          <div class="cake layer5"></div>
+          <div class="cream"></div>
+          <div class="sprinkles"></div>
+          <div class="candle-number" id="candleNum">
+            22
+            <div class="flame"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center">
+        <button id="btnPlay">Bấm vào đây đi</button>
+      </div>
+    </div>
+  </div>
+
+  <audio id="song" preload="auto" loop>
+    <source src="https://raw.githubusercontent.com/ngocdungnee/my-photos/main/Happy%20Birthday%20To%20You.mp3" />
+  </audio>
+
+<script>
+// Confetti
+const canvas = document.getElementById('confetti');
+const ctx = canvas.getContext('2d');
+let W = canvas.width = window.innerWidth;
+let H = canvas.height = window.innerHeight;
+window.addEventListener('resize', ()=>{W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;});
+function rand(min,max){return Math.random()*(max-min)+min}
+class Piece{constructor(){this.reset()}
+  reset(){this.x=rand(0,W);this.y=rand(-H,0);this.w=rand(6,12);this.h=rand(8,18);
+    this.vx=rand(-0.6,0.6);this.vy=rand(1.2,3);
+    this.rot=rand(0,Math.PI*2);this.vr=rand(-0.1,0.1);
+    this.color=['#ff6b6b','#ffd166','#6be4b8','#9ad0ff'][Math.floor(rand(0,4))]}
+  step(){this.x+=this.vx;this.y+=this.vy;this.rot+=this.vr;if(this.y>H+20) this.reset()}
+  draw(){ctx.save();ctx.translate(this.x,this.y);ctx.rotate(this.rot);
+    ctx.fillStyle=this.color;ctx.fillRect(-this.w/2,-this.h/2,this.w,this.h);ctx.restore()}}
+const pieces = Array.from({length:100},()=>new Piece());
+function loop(){ctx.clearRect(0,0,W,H);for(const p of pieces){p.step();p.draw()}requestAnimationFrame(loop)}
+loop();
+
+// Audio + Cake show
+const audio = document.getElementById('song');
+document.getElementById('btnPlay').addEventListener('click', () => {
+  audio.muted = false;
+  audio.play().catch(()=>{});
+
+  document.querySelector('.photo-cake').classList.add('active');
+  document.getElementById('photo').classList.add('move-left');
+  document.getElementById('cake').classList.add('show');
+
+  setTimeout(() => {
+    const candle = document.getElementById("candleNum");
+    candle.classList.add("change");    
+    setTimeout(() => {
+      candle.childNodes[0].nodeValue = "23"; 
+    }, 400); 
+    candle.addEventListener("animationend", () => {
+      candle.classList.remove("change");
+    }, { once: true });
+  }, 3000);
+});
+
+// Sprinkles random
+const sprinklesContainer = document.querySelector(".sprinkles");
+for (let i = 0; i < 20; i++) {
+  const sprinkle = document.createElement("div");
+  sprinkle.classList.add("sprinkle");
+  sprinkle.style.left = Math.floor(Math.random() * 100) + "px";
+  sprinkle.style.top = Math.floor(Math.random() * 12) + "px";
+  const rotation = Math.floor(Math.random() * 180);
+  sprinkle.style.setProperty("--rotation", rotation + "deg");
+  sprinklesContainer.appendChild(sprinkle);
+}
+</script>
+</body>
+</html>
